@@ -1,3 +1,4 @@
-app:
-    resource: @AppBundle/Controller/
+pp5_movie_universe:
+    resource: "@PP5MovieUniverseBundle/Controller/"
     type:     annotation
+    prefix:   /

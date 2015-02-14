@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Entity\Movie;
+namespace PP5\MovieUniverseBundle\Entity\Movie;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -70,10 +70,10 @@ class Genre {
     /**
      * Add movies
      *
-     * @param \AppBundle\Entity\Movie\Movie $movies
+     * @param \PP5\MovieUniverseBundle\Entity\Movie\Movie $movies
      * @return Genre
      */
-    public function addMovie(\AppBundle\Entity\Movie\Movie $movies)
+    public function addMovie(\PP5\MovieUniverseBundle\Entity\Movie\Movie $movies)
     {
         $this->movies[] = $movies;
 
@@ -83,9 +83,9 @@ class Genre {
     /**
      * Remove movies
      *
-     * @param \AppBundle\Entity\Movie\Movie $movies
+     * @param \PP5\MovieUniverseBundle\Entity\Movie\Movie $movies
      */
-    public function removeMovie(\AppBundle\Entity\Movie\Movie $movies)
+    public function removeMovie(\PP5\MovieUniverseBundle\Entity\Movie\Movie $movies)
     {
         $this->movies->removeElement($movies);
     }

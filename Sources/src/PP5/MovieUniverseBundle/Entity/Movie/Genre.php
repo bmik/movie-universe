@@ -1,14 +1,15 @@
 <?php
 
-namespace AppBundle\Entity\Movie;
+namespace PP5\MovieUniverseBundle\Entity\Movie;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity
  * @ORM\Table()
  */
-class Actor {
+class Genre {
 
     /**
      * @ORM\Id
@@ -23,22 +24,15 @@ class Actor {
     protected $name;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\OneToMany(targetEntity="Movie", mappedBy="genre")
      */
-    protected $surname;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="Movie", mappedBy="actors")
-     **/
     protected $movies;
 
-    /**
-     * Constructor
-     */
     public function __construct()
     {
-        $this->movies = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->movies = new ArrayCollection();
     }
+
 
     /**
      * Get id
@@ -54,7 +48,7 @@ class Actor {
      * Set name
      *
      * @param string $name
-     * @return Actor
+     * @return Genre
      */
     public function setName($name)
     {
@@ -74,35 +68,12 @@ class Actor {
     }
 
     /**
-     * Set surname
-     *
-     * @param string $surname
-     * @return Actor
-     */
-    public function setSurname($surname)
-    {
-        $this->surname = $surname;
-
-        return $this;
-    }
-
-    /**
-     * Get surname
-     *
-     * @return string 
-     */
-    public function getSurname()
-    {
-        return $this->surname;
-    }
-
-    /**
      * Add movies
      *
-     * @param \AppBundle\Entity\Movie\Movie $movies
-     * @return Actor
+     * @param \PP5\MovieUniverseBundle\Entity\Movie\Movie $movies
+     * @return Genre
      */
-    public function addMovie(\AppBundle\Entity\Movie\Movie $movies)
+    public function addMovie(\PP5\MovieUniverseBundle\Entity\Movie\Movie $movies)
     {
         $this->movies[] = $movies;
 
@@ -112,9 +83,9 @@ class Actor {
     /**
      * Remove movies
      *
-     * @param \AppBundle\Entity\Movie\Movie $movies
+     * @param \PP5\MovieUniverseBundle\Entity\Movie\Movie $movies
      */
-    public function removeMovie(\AppBundle\Entity\Movie\Movie $movies)
+    public function removeMovie(\PP5\MovieUniverseBundle\Entity\Movie\Movie $movies)
     {
         $this->movies->removeElement($movies);
     }

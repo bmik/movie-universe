@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Entity\Movie;
+namespace PP5\MovieUniverseBundle\Entity\Movie;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -65,10 +65,10 @@ class Review {
     /**
      * Set movie
      *
-     * @param \AppBundle\Entity\Movie\Movie $movie
+     * @param \PP5\MovieUniverseBundle\Entity\Movie\Movie $movie
      * @return Review
      */
-    public function setMovie(\AppBundle\Entity\Movie\Movie $movie = null)
+    public function setMovie(\PP5\MovieUniverseBundle\Entity\Movie\Movie $movie = null)
     {
         $this->movie = $movie;
 
@@ -78,7 +78,7 @@ class Review {
     /**
      * Get movie
      *
-     * @return \AppBundle\Entity\Movie\Movie 
+     * @return \PP5\MovieUniverseBundle\Entity\Movie\Movie 
      */
     public function getMovie()
     {

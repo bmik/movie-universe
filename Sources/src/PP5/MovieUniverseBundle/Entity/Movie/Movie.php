@@ -1,12 +1,12 @@
 <?php
 
-namespace AppBundle\Entity\Movie;
+namespace PP5\MovieUniverseBundle\Entity\Movie;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @ORM\Entity(repositoryClass="AppBundle\Repository\MovieRepository")
+ * @ORM\Entity(repositoryClass="PP5\MovieUniverseBundle\Repository\MovieRepository")
  * @ORM\Table()
  */
 class Movie {
@@ -60,6 +60,7 @@ class Movie {
         $this->reviews = new ArrayCollection();
         $this->actors = new ArrayCollection();
     }
+
 
     /**
      * Get id
@@ -166,10 +167,10 @@ class Movie {
     /**
      * Set genre
      *
-     * @param \AppBundle\Entity\Movie\Genre $genre
+     * @param \PP5\MovieUniverseBundle\Entity\Movie\Genre $genre
      * @return Movie
      */
-    public function setGenre(\AppBundle\Entity\Movie\Genre $genre = null)
+    public function setGenre(\PP5\MovieUniverseBundle\Entity\Movie\Genre $genre = null)
     {
         $this->genre = $genre;
 
@@ -179,7 +180,7 @@ class Movie {
     /**
      * Get genre
      *
-     * @return \AppBundle\Entity\Movie\Genre 
+     * @return \PP5\MovieUniverseBundle\Entity\Movie\Genre 
      */
     public function getGenre()
     {
@@ -189,10 +190,10 @@ class Movie {
     /**
      * Add reviews
      *
-     * @param \AppBundle\Entity\Movie\Review $reviews
+     * @param \PP5\MovieUniverseBundle\Entity\Movie\Review $reviews
      * @return Movie
      */
-    public function addReview(\AppBundle\Entity\Movie\Review $reviews)
+    public function addReview(\PP5\MovieUniverseBundle\Entity\Movie\Review $reviews)
     {
         $this->reviews[] = $reviews;
 
@@ -202,9 +203,9 @@ class Movie {
     /**
      * Remove reviews
      *
-     * @param \AppBundle\Entity\Movie\Review $reviews
+     * @param \PP5\MovieUniverseBundle\Entity\Movie\Review $reviews
      */
-    public function removeReview(\AppBundle\Entity\Movie\Review $reviews)
+    public function removeReview(\PP5\MovieUniverseBundle\Entity\Movie\Review $reviews)
     {
         $this->reviews->removeElement($reviews);
     }
@@ -222,10 +223,10 @@ class Movie {
     /**
      * Add actors
      *
-     * @param \AppBundle\Entity\Movie\Actor $actors
+     * @param \PP5\MovieUniverseBundle\Entity\Movie\Actor $actors
      * @return Movie
      */
-    public function addActor(\AppBundle\Entity\Movie\Actor $actors)
+    public function addActor(\PP5\MovieUniverseBundle\Entity\Movie\Actor $actors)
     {
         $this->actors[] = $actors;
 
@@ -235,9 +236,9 @@ class Movie {
     /**
      * Remove actors
      *
-     * @param \AppBundle\Entity\Movie\Actor $actors
+     * @param \PP5\MovieUniverseBundle\Entity\Movie\Actor $actors
      */
-    public function removeActor(\AppBundle\Entity\Movie\Actor $actors)
+    public function removeActor(\PP5\MovieUniverseBundle\Entity\Movie\Actor $actors)
     {
         $this->actors->removeElement($actors);
     }

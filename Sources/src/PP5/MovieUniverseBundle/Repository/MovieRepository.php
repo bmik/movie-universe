@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Repository;
+namespace PP5\MovieUniverseBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 
@@ -19,15 +19,10 @@ class MovieRepository extends EntityRepository
         $qb = $this->getEntityManager()->createQueryBuilder();
 
         $qb->select('m, count(m.reviews) as reviewsCount')
-           ->from('AppBundle:Movie\Movie', 'm')
-           ->addOrderBy('reviewsCount', 'DESC')
-           ->setMaxResults($limit);
+            ->from('AppBundle:Movie\Movie', 'm')
+            ->addOrderBy('reviewsCount', 'DESC')
+            ->setMaxResults($limit);
         return $qb->getQuery()->getResult();
-    }
-
-    public function findTop10MostOrderedMovies()
-    {
-
     }
 
 }
