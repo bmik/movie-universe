@@ -31,14 +31,7 @@ class MovieRepository extends EntityRepository
 
     public function findAllAvailableMovies()
     {
-        $qb = $this->getEntityManager()->createQueryBuilder();
-
-        $qb ->select('m, g, r, a')
-            ->from('PP5MovieUniverseBundle:Movie\Movie', 'm')
-            ->leftJoin('m.genre', 'g')
-            ->leftJoin('m.actors', 'a')
-            ->leftJoin('m.reviews', 'r');
-
+        $qb = $this->createQueryBuilder('m');
         return $qb->getQuery()->getResult();
     }
 
@@ -55,17 +48,8 @@ class MovieRepository extends EntityRepository
         return $qb->getQuery()->getResult();
     }
 
-    public function findGenres()
-    {
-        $qb = $this->getEntityManager()->createQueryBuilder();
-
-        $qb ->select('g')
-            ->from('PP5MovieUniverseBundle:Movie\Genre', 'g');
-
-        return $qb->getQuery()->getResult();
-    }
-
-    public function findMoviesByGenre($genre)
+    // TODO remove if unused
+    /*public function findMoviesByGenre($genre)
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
@@ -78,6 +62,6 @@ class MovieRepository extends EntityRepository
             ->setParameter('genre', $genre);
 
         return $qb->getQuery()->getResult();
-    }
+    }*/
 
 }
