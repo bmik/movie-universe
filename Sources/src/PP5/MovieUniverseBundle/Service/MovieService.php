@@ -3,25 +3,33 @@
 namespace PP5\MovieUniverseBundle\Service;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\EntityManager;
 use PP5\MovieUniverseBundle\Repository\MovieRepository;
 
 class MovieService {
 
-    protected $movieRepository;
+    protected $entityManager;
 
-    public function __construct(MovieRepository $repository)
+    public function __construct(EntityManager $entityManager)
     {
-        $this->movieRepository = $repository;
+        $this->entityManager = $entityManager;
     }
 
-    public function getTop10ReviewedMovies()
+    public function getMostOrderedMovies()
     {
-        $orderedReviewedMoviesId = $this->movieRepository->findMoviesWithReviewsId();
+        return new ArrayCollection();
+    }
+
+    public function getMostReviewedMovies()
+    {
+        $movieRepository = $this->entityManager->getRepository('PP5MovieUniverseBundle:Movie\Movie');
+
+        $orderedReviewedMoviesId = $movieRepository->findMoviesWithReviewsId();
         $top10MostReviewedMovies = new ArrayCollection();
 
         foreach ($orderedReviewedMoviesId as $movieId)
         {
-            $movie = $this->movieRepository->findMovie($movieId);
+            $movie = $movieRepository->findMovie($movieId);
             $top10MostReviewedMovies->add($movie);
         }
 
@@ -30,13 +38,17 @@ class MovieService {
 
     public function getAvailableMovies()
     {
-        $availableMovies = $this->movieRepository->findAllAvailableMovies();
+        $movieRepository = $this->entityManager->getRepository('PP5MovieUniverseBundle:Movie\Movie');
+
+        $availableMovies = $movieRepository->findAllAvailableMovies();
         return $availableMovies;
     }
 
     public function getGenres()
     {
-        $genres = $this->movieRepository->findGenres();
+        $genreRepository = $this->entityManager->getRepository('PP5MovieUniverseBundle:Movie\Genre');
+
+        $genres = $genreRepository->findAll();
         return $genres;
     }
 

@@ -12,4 +12,4 @@ services:
      pp5_movie_universe.movie_service:
           class: %pp5_movie_universe.movie_service.class%
           arguments:
-                - @=service('doctrine.orm.default_entity_manager').getRepository('PP5MovieUniverseBundle:Movie\\Movie')
+                - @=service('doctrine.orm.default_entity_manager')
