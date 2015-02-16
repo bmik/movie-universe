@@ -1,1 +1,17 @@
-Hello World!
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    Hello World!
+
+    <h1>Dostępne filmy:</h1>
+    {{ dump(available_movies) }}
+    <h1>Najczęściej wypożyczane:</h1>
+    {{ dump(most_ordered_movies) }}
+    <h1>Najczęściej recenzowane:</h1>
+    {{ dump(most_reviewed_movies) }}
+    <h1>Gatunki filmów:</h1>
+    {{ dump(genres) }}
+
+{% endblock %}
+
