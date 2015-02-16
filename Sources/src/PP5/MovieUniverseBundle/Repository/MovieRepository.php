@@ -3,6 +3,7 @@
 namespace PP5\MovieUniverseBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query;
 
 /**
  * MovieRepository
@@ -13,15 +14,69 @@ use Doctrine\ORM\EntityRepository;
 class MovieRepository extends EntityRepository
 {
 
-    public function findTop10MostReviewedMovies()
+    public function findMovie($id)
     {
-        $limit = 10;
         $qb = $this->getEntityManager()->createQueryBuilder();
 
-        $qb->select('m, count(m.reviews) as reviewsCount')
-            ->from('AppBundle:Movie\Movie', 'm')
-            ->addOrderBy('reviewsCount', 'DESC')
-            ->setMaxResults($limit);
+        $qb ->select('m, g, r, a')
+            ->from('PP5MovieUniverseBundle:Movie\Movie', 'm')
+            ->join('m.genre', 'g')
+            ->join('m.actors', 'a')
+            ->join('m.reviews', 'r')
+            ->where('m.id = :id')
+            ->setParameter('id', (int) $id);
+
+        return $qb->getQuery()->getSingleResult();
+    }
+
+    public function findAllAvailableMovies()
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+
+        $qb ->select('m, g, r, a')
+            ->from('PP5MovieUniverseBundle:Movie\Movie', 'm')
+            ->leftJoin('m.genre', 'g')
+            ->leftJoin('m.actors', 'a')
+            ->leftJoin('m.reviews', 'r');
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function findMoviesWithReviewsId()
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+
+        $qb ->select('count(r.movie) as hidden revCount, m.id')
+            ->from('PP5MovieUniverseBundle:Movie\Movie', 'm')
+            ->join('m.reviews', 'r')
+            ->groupBy('m.id')
+            ->orderBy('revCount', 'DESC');
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function findGenres()
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+
+        $qb ->select('g')
+            ->from('PP5MovieUniverseBundle:Movie\Genre', 'g');
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function findMoviesByGenre($genre)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+
+        $qb ->select('m, g, r, a')
+            ->from('PP5MovieUniverseBundle:Movie\Movie', 'm')
+            ->join('m.genre', 'g')
+            ->join('m.actors', 'a')
+            ->join('m.reviews', 'r')
+            ->where('m.genre = :genre')
+            ->setParameter('genre', $genre);
+
         return $qb->getQuery()->getResult();
     }
 
