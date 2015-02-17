@@ -4,6 +4,7 @@ namespace PP5\MovieUniverseBundle\Service;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
+use PP5\MovieUniverseBundle\Entity\Movie\Review;
 use PP5\MovieUniverseBundle\Repository\MovieRepository;
 
 class MovieService {
@@ -50,6 +51,20 @@ class MovieService {
 
         $genres = $genreRepository->findAll();
         return $genres;
+    }
+
+    public function addReview($movieId, $reviewContent)
+    {
+        $movieRepository = $this->entityManager->getRepository('PP5MovieUniverseBundle:Movie\Movie');
+
+        $movie = $movieRepository->find($movieId);
+
+        $review = new Review();
+        $review->setMovie($movie);
+        $review->setReviewContent($reviewContent);
+
+        $this->entityManager->persist($review);
+        $this->entityManager->flush();
     }
 
 }
