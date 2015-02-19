@@ -4,6 +4,7 @@ namespace PP5\MovieUniverseBundle\Entity\User;
 
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
@@ -20,24 +21,29 @@ class User extends BaseUser
 
     /**
      * @ORM\Column(type="string", length=100)
+     * @Assert\NotBlank(message="Proszę wpisać swoje imię.", groups={"Registration", "Profile"})
+     * @Assert\Length(
+     *  min=3,
+     *  max=100,
+     *  minMessage="Imię jest za krótkie.",
+     *  maxMessage="Imię jest za długie.",
+     *  groups={"Registration","Profile"}
+     * )
      */
     protected $name;
 
     /**
      * @ORM\Column(type="string", length=100)
+     * @Assert\NotBlank(message="Proszę wpisać swoje nazwisko.", groups={"Registration", "Profile"})
+     * @Assert\Length(
+     *  min=2,
+     *  max=100,
+     *  minMessage="Nazwisko jest za krótkie.",
+     *  maxMessage="Nazwisko jest za długie.",
+     *  groups={"Registration", "Profile"}
+     * )
      */
     protected $surname;
-
-    /**
-     * @ORM\Column(type="string", length=100)
-     */
-    protected $email;
-
-    /**
-     * @ORM\Column(type="date")
-     */
-    protected $dateOfBirth;
-
 
     /**
      * Get id
@@ -93,51 +99,5 @@ class User extends BaseUser
     public function getSurname()
     {
         return $this->surname;
-    }
-
-    /**
-     * Set email
-     *
-     * @param string $email
-     * @return User
-     */
-    public function setEmail($email)
-    {
-        $this->email = $email;
-
-        return $this;
-    }
-
-    /**
-     * Get email
-     *
-     * @return string 
-     */
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    /**
-     * Set dateOfBirth
-     *
-     * @param \DateTime $dateOfBirth
-     * @return User
-     */
-    public function setDateOfBirth($dateOfBirth)
-    {
-        $this->dateOfBirth = $dateOfBirth;
-
-        return $this;
-    }
-
-    /**
-     * Get dateOfBirth
-     *
-     * @return \DateTime 
-     */
-    public function getDateOfBirth()
-    {
-        return $this->dateOfBirth;
     }
 }

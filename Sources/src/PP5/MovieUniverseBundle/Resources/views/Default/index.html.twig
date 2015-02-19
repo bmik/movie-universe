@@ -2,16 +2,24 @@
 
 {% block body %}
 
-    Hello World!
+    {% if app.user %}
 
-    <h1>Dostępne filmy:</h1>
-    {{ dump(available_movies) }}
-    <h1>Najczęściej wypożyczane:</h1>
-    {{ dump(most_ordered_movies) }}
-    <h1>Najczęściej recenzowane:</h1>
-    {{ dump(most_reviewed_movies) }}
-    <h1>Gatunki filmów:</h1>
-    {{ dump(genres) }}
+        Hello {{ app.user.name }} {{ app.user.surname }}!  <a href="{{ path('fos_user_security_logout') }}">Wyloguj</a>
+
+        <h1>Dostępne filmy:</h1>
+        {{ dump(available_movies) }}
+        <h1>Najczęściej wypożyczane:</h1>
+        {{ dump(most_ordered_movies) }}
+        <h1>Najczęściej recenzowane:</h1>
+        {{ dump(most_reviewed_movies) }}
+        <h1>Gatunki filmów:</h1>
+        {{ dump(genres) }}
+
+    {% elseif not app.user %}
+
+        <a href="{{ path('fos_user_security_login') }}">Zaloguj</a>
+
+    {% endif %}
 
 {% endblock %}
 
