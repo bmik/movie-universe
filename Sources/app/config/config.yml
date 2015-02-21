@@ -79,3 +79,17 @@ fos_user:
     registration:
         form:
             type: pp5_movie_universe_registration
+
+sylius_cart:
+    resolver: pp5_movie_universe.cart_item_service # The id of our newly created service.
+    classes: ~ # This key can be empty but it must be present in the configuration.
+
+sylius_order:
+    driver: doctrine/orm # Configure the doctrine orm driver used in documentation.
+    classes:
+        order:
+            model: PP5\MovieUniverseBundle\Entity\Order\Order
+        order_item:
+            model: PP5\MovieUniverseBundle\Entity\Order\OrderItem
+
+sylius_money: ~

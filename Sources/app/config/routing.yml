@@ -5,3 +5,7 @@ pp5_movie_universe:
 
 fos_user:
     resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+
+sylius_cart:
+    resource: @SyliusCartBundle/Resources/config/routing.yml
+    prefix: /cart
