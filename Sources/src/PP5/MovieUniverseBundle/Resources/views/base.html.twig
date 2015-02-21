@@ -1,0 +1,30 @@
+﻿<html>
+	<head>
+		<title>Movie Universe</title>
+	</head>
+	<body>
+		<header>
+			<h1>Witamy w Movie Universe!</h1>
+		</header>
+		
+		{% if app.user %}
+			<top_bar>
+				Witaj {{ app.user.name }} {{ app.user.surname }}!<br>
+				<a href="#koszyk">Koszyk</a> | <a href="{{ path('fos_user_security_logout') }}">Wyloguj</a>
+			</top_bar>
+		{% elseif not app.user %}
+			<top_bar>
+				Witaj Nieznajomy!<br>
+				<a href="#koszyk">Koszyk</a> | <a href="{{ path('fos_user_security_login') }}">Zaloguj</a>
+			</top_bar>
+		{% endif %}
+		
+		<section>
+			{% block content %}
+			{% endblock %}
+		</section>
+		<footer>
+			(c) Movie Universe 2015
+		</footer>
+	</body>
+</html>
