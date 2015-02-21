@@ -16,6 +16,12 @@ class MovieService {
         $this->entityManager = $entityManager;
     }
 
+    public function getMovie($id)
+    {
+        $movieRepository = $this->entityManager->getRepository('PP5MovieUniverseBundle:Movie\Movie');
+        return $movieRepository->findMovie($id);
+    }
+
     public function getMostOrderedMovies()
     {
         return new ArrayCollection();
