@@ -15,14 +15,20 @@
 		{% elseif not app.user %}
 			<top_bar>
 				Witaj Nieznajomy!<br>
-				<a href="#koszyk">Koszyk</a> | <a href="{{ path('fos_user_security_login') }}">Zaloguj</a>
+				<a href="#koszyk">Koszyk</a> | <a href="{{ path('fos_user_security_login') }}">Zaloguj</a> | <a href="{{ path('fos_user_registration_register') }}">Zarejestruj</a>
+				
+
+				
 			</top_bar>
 		{% endif %}
 		
+		<br><br><br>
 		<section>
 			{% block content %}
 			{% endblock %}
 		</section>
+		<br><br>
+		
 		<footer>
 			(c) Movie Universe 2015
 		</footer>

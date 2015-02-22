@@ -8,7 +8,8 @@
 					<h1>Dostępne filmy:</h1>
 					<p><ul>
 						{% for available_movie in available_movies %}
-							<li>{{ available_movie.title }} [{{ available_movie.genre.name }}]<br>
+							<li><a href="{{ 'movie/' ~ available_movie.id  }}">
+							{{ available_movie.title }}</a> [{{ available_movie.genre.name }}]<br>
 						{% endfor %}
 					</ul></p>					
 				</td>
@@ -26,7 +27,7 @@
 					<h1>Najczęściej recenzowane:</h1>
 					<p><ol>
 						{% for most_reviewed_movie in most_reviewed_movies %}
-							<li>{{ most_reviewed_movie.title }} <br>
+							<li><a href="{{ 'movie/' ~ most_reviewed_movie.id  }}">{{ most_reviewed_movie.title }}</a> <br>
 						{% endfor %}
 					</ol></p>
 				</td>

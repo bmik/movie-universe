@@ -1,0 +1,38 @@
+{% extends 'PP5MovieUniverseBundle::base.html.twig' %}
+
+{% block content %}
+
+		<table width=80% align=center>
+			<tr>
+				<td width=30% valign="top" cellpadding="20">
+					<h1>{{ movie.title }}</h1>
+					<p>
+							<img src="{{ asset('bundles/pp5movieuniverse/images/' ~ movie.id ~ '.png'	) }}" />
+					</p>					
+				</td>
+				<td width=30% valign="top" cellpadding="20">	
+					<h1>O filmie + wypożycz</h1>
+					<p>{{ movie.price }}<br>WYPOŻYCZ</p>
+					<p>{{ movie.description }}</p>
+				</td>
+			</tr>
+			<tr>
+				<td width=30% valign="top" cellpadding="20">
+					<h1>Recenzje:</h1>
+					<p><ul>
+					
+						{% for review in movie.reviews %}
+							<li>{{ review.reviewContent }}
+						{% endfor %}
+					
+					</ul></p>
+				</td>
+				<td width=30% valign="top" cellpadding="20">
+					<h1>Dodaj recenzję:</h1>
+					<p>zzz</p>
+				</td>
+			</tr>
+		</table>
+
+{% endblock %}
+

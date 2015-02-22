@@ -8,7 +8,7 @@
 		<header>
 			<h1>Zaloguj się do Movie Universe!</h1>
 		</header>
-
+	<br><br><br>
 {% block fos_user_content %}
 {% if error %}
     <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
@@ -29,7 +29,7 @@
     <input type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" />
 </form>
 {% endblock fos_user_content %}
-
+	<br><br>
 		<footer>
 			(c) Movie Universe 2015
 		</footer>
