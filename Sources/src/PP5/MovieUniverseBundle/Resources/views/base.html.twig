@@ -1,30 +1,39 @@
 ﻿<html>
 	<head>
 		<title>Movie Universe</title>
+		<style type="text/css">
+			#main { margin-left: auto; margin-right: auto; width: 850px; padding: 15px 15px 15px 15px; border: 1px solid black; background-color: cccccc; box-shadow: 5px 5px 10px #888888;}
+			#center { align:center }
+		</style>
 	</head>
 	<body>
-		<header>
-			<h1>Witamy w Movie Universe!</h1>
-		</header>
+		<div id="main">
+			<header>
+				<a href="/movie-universe/app_dev.php/home"><img src="{{ asset('bundles/pp5movieuniverse/images/logo.png') }}"></a>
+			</header>
 		
-		{% if app.user %}
-			<top_bar>
-				Witaj {{ app.user.name }} {{ app.user.surname }}!<br>
-				<a href="#koszyk">Koszyk</a> | <a href="{{ path('fos_user_security_logout') }}">Wyloguj</a>
-			</top_bar>
-		{% elseif not app.user %}
-			<top_bar>
-				Witaj Nieznajomy!<br>
-				<a href="#koszyk">Koszyk</a> | <a href="{{ path('fos_user_security_login') }}">Zaloguj</a>
-			</top_bar>
-		{% endif %}
+			{% if app.user %}
+				<div align="center">
+					<br>Witaj {{ app.user.name }} {{ app.user.surname }}!<br>
+					<a href="#koszyk">Koszyk</a> | <a href="{{ path('fos_user_security_logout') }}">Wyloguj</a>
+				</div>
+			{% elseif not app.user %}
+				<div align="center">
+					<br>Witaj Nieznajomy!<br>
+					<a href="#koszyk">Koszyk</a> | <a href="{{ path('fos_user_security_login') }}">Zaloguj</a> | <a href="{{ path('fos_user_registration_register') }}">Zarejestruj</a>
+				</div>
+			{% endif %}
 		
-		<section>
-			{% block content %}
-			{% endblock %}
-		</section>
-		<footer>
-			(c) Movie Universe 2015
-		</footer>
+			<br><br><br>
+			<section>
+				{% block content %}
+				{% endblock %}
+			</section>
+			<br><br>
+			
+			<footer>
+				(c) Movie Universe 2015
+			</footer>
+		</div>
 	</body>
 </html>

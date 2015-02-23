@@ -3,6 +3,7 @@
 namespace PP5\MovieUniverseBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\Query;
 
 /**
@@ -26,13 +27,20 @@ class MovieRepository extends EntityRepository
             ->where('m.id = :id')
             ->setParameter('id', (int) $id);
 
-        return $qb->getQuery()->getSingleResult();
+        return $qb->getQuery()->getOneOrNullResult();
     }
 
     public function findAllAvailableMovies()
     {
         $qb = $this->createQueryBuilder('m');
-        return $qb->getQuery()->getResult();
+        try
+        {
+            $result = $qb->getQuery()->getResult();
+        } catch (NoResultException $e)
+        {
+            $result = null;
+        }
+        return $result;
     }
 
     public function findMoviesWithReviewsId()
@@ -45,7 +53,14 @@ class MovieRepository extends EntityRepository
             ->groupBy('m.id')
             ->orderBy('revCount', 'DESC');
 
-        return $qb->getQuery()->getResult();
+        try
+        {
+            $result = $qb->getQuery()->getResult();
+        } catch (NoResultException $e)
+        {
+            $result = null;
+        }
+        return $result;
     }
 
     // TODO remove if unused
