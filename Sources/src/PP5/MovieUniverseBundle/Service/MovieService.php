@@ -34,9 +34,9 @@ class MovieService {
         $orderedReviewedMoviesId = $movieRepository->findMoviesWithReviewsId();
         $top10MostReviewedMovies = new ArrayCollection();
 
-        foreach ($orderedReviewedMoviesId as $movieId)
+        foreach ($orderedReviewedMoviesId as $id => $movieId)
         {
-            $movie = $movieRepository->findMovie($movieId);
+            $movie = $movieRepository->findMovie($movieId['id']);
             $top10MostReviewedMovies->add($movie);
         }
 
