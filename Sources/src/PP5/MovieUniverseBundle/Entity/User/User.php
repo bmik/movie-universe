@@ -127,4 +127,27 @@ class User extends BaseUser
     {
         return $this->surname;
     }
+
+    /**
+     * Add orders
+     *
+     * @param \PP5\MovieUniverseBundle\Entity\Order\Order $orders
+     * @return User
+     */
+    public function addOrder(\PP5\MovieUniverseBundle\Entity\Order\Order $orders)
+    {
+        $this->orders[] = $orders;
+
+        return $this;
+    }
+
+    /**
+     * Remove orders
+     *
+     * @param \PP5\MovieUniverseBundle\Entity\Order\Order $orders
+     */
+    public function removeOrder(\PP5\MovieUniverseBundle\Entity\Order\Order $orders)
+    {
+        $this->orders->removeElement($orders);
+    }
 }

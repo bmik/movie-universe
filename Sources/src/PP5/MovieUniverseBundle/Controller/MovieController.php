@@ -5,6 +5,7 @@ namespace PP5\MovieUniverseBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\Request;
 
 class MovieController extends Controller
 {
@@ -24,5 +25,11 @@ class MovieController extends Controller
             array(
                 'movie' => $movie,
             ));
+    }
+
+    public function addMovieToCartAction(Request $request)
+    {
+
+
     }
 }
