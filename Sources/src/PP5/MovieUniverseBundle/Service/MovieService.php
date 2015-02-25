@@ -59,15 +59,13 @@ class MovieService {
         return $genres;
     }
 
-    public function addReview($movieId, $reviewContent)
+    public function addReview($movieId, Review $review)
     {
         $movieRepository = $this->entityManager->getRepository('PP5MovieUniverseBundle:Movie\Movie');
 
         $movie = $movieRepository->find($movieId);
 
-        $review = new Review();
         $review->setMovie($movie);
-        $review->setReviewContent($reviewContent);
 
         $this->entityManager->persist($review);
         $this->entityManager->flush();
