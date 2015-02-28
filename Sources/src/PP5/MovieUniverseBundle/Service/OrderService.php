@@ -25,6 +25,17 @@ class OrderService {
         return $order;
     }
 
+    public function getOrderWithItems($cookie, User $user = null)
+    {
+        $orderRepository = $this->entityManager->getRepository('PP5MovieUniverseBundle:Order\Order');
+
+        $order = $this->handleOrderExists($cookie, $user);
+
+        $fullOrder = $orderRepository->getOrderWithItems($order->getId());
+
+        return $fullOrder;
+    }
+
     public function addMovie(Order $order, Movie $movie)
     {
         $orderItemRepository = $this->entityManager->getRepository('PP5MovieUniverseBundle:Order\OrderItem');

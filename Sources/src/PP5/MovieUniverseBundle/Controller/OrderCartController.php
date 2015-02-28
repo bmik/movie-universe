@@ -24,9 +24,10 @@ class OrderCartController extends Controller {
         $loggedUserName = $this->container->get('security.token_storage')->getToken()->getUsername();
         $loggedUser = $userService->getLoggedUser($loggedUserName);
 
-        $order = $orderService->getOrder($orderCookie, $loggedUser);
+        $order = $orderService->getOrderWithItems($orderCookie, $loggedUser);
 
-
+        return $this->render('@PP5MovieUniverse/OrderCart/cart.html.twig',
+            array("order" => $order));
     }
 
     /**
