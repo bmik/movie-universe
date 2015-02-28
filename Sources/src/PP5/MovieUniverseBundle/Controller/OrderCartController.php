@@ -59,7 +59,7 @@ class OrderCartController extends Controller {
         }
 
         if ($orderCookie && $isLoggedUser) {
-            $response->headers->removeCookie('ORDERID');
+            $response->headers->clearCookie('ORDERID');
         }
 
         $response->sendHeaders();
