@@ -10,7 +10,7 @@ class ReviewType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('reviewContent', 'textarea', array('label' => 'Treść recenzji'));
+        $builder->add('reviewContent', 'textarea',  array('attr' => array('rows' => '10', 'cols' => '70')), array('label' => 'Treść recenzji'));
     }
 
     public function getName()

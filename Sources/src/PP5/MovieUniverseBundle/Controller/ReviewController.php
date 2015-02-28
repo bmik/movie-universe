@@ -29,6 +29,8 @@ class ReviewController extends Controller
  
 		$form->handleRequest($request);
 		
+		$movie = $movieService->getMovie($slug);
+		
 		if ($form->isValid())
 		{
 			$movieService->addReview($slug, $review);
@@ -39,7 +41,7 @@ class ReviewController extends Controller
 			return $this->redirect($this->generateUrl('movie', array('slug' => $slug)));
 		}
 	
-		return $this->render('PP5MovieUniverseBundle:Review:review.html.twig', array('form' => $form->createView()));
+		return $this->render('PP5MovieUniverseBundle:Review:review.html.twig', array('form' => $form->createView(), 'movie' => $movie));
 	 
 	 }
 

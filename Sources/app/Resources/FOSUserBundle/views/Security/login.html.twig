@@ -2,6 +2,10 @@
 
 {% trans_default_domain 'FOSUserBundle' %}
 
+{% block title %}
+	Logowanie
+{% endblock %}
+
 {% block content %}
 {% if error %}
     <div><h4>{{ error.messageKey|trans(error.messageData, 'security') }}</h4></div>
