@@ -15,7 +15,10 @@
 					<p>
 						<big><b>Cena: {{ movie.price }}zł</b></big>
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<input type="button" value="Wypożycz!">
+                        <form action="{{ path('order.add_item', {slug : movie.id}) }}">
+                        <input type="submit" value="Wypożycz!">
+                        </form>
+
 					</p>
 					<p>{{ movie.description }}</p><br>
 					<p>Obsada:<ul>
