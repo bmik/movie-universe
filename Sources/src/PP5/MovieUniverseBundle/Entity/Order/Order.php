@@ -5,10 +5,11 @@ namespace PP5\MovieUniverseBundle\Entity\Order;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="PP5\MovieUniverseBundle\Repository\OrderRepository")
  * @ORM\Table(name="mu_order")
  */
-class Order {
+class Order
+{
 
     /**
      * @ORM\Id
@@ -18,7 +19,7 @@ class Order {
     protected $id;
 
     /**
-     * @ORM\Column(type="string", length=12)
+     * @ORM\Column(type="string", length=12, nullable=true)
      */
     protected $number;
 
@@ -34,7 +35,7 @@ class Order {
     protected $orderItems;
 
     /**
-     * ORM\@ORM\ManyToOne(targetEntity="OrderStatus")
+     * @ORM\ManyToOne(targetEntity="OrderStatus")
      * @ORM\JoinColumn(name="status_id", referencedColumnName="id")
      */
     protected $status;
@@ -45,27 +46,19 @@ class Order {
     protected $createdAt;
 
     /**
-     * @ORM\Column(name="completed_at", type="datetime")
+     * @ORM\Column(name="completed_at", type="datetime", nullable=true)
      */
     protected $completedAt;
 
     /**
-     * @ORM\Column(name="updated_at", type="datetime")
+     * @ORM\Column(name="updated_at", type="datetime", nullable=true)
      */
     protected $updatedAt;
 
     /**
-     * @ORM\Column(name="deleted_at", type="datetime")
+     * @ORM\Column(name="deleted_at", type="datetime", nullable=true)
      */
     protected $deletedAt;
-
-    /**
-     * @ORM\PrePersist()
-     */
-    public function onPrePersistSetRegistrationDate()
-    {
-        $this->createdAt = new \DateTime();
-    }
 
     /**
      * Constructor
@@ -254,5 +247,28 @@ class Order {
     public function getOrderItems()
     {
         return $this->orderItems;
+    }
+
+    /**
+     * Set status
+     *
+     * @param \PP5\MovieUniverseBundle\Entity\Order\OrderStatus $status
+     * @return Order
+     */
+    public function setStatus(\PP5\MovieUniverseBundle\Entity\Order\OrderStatus $status = null)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return \PP5\MovieUniverseBundle\Entity\Order\OrderStatus 
+     */
+    public function getStatus()
+    {
+        return $this->status;
     }
 }

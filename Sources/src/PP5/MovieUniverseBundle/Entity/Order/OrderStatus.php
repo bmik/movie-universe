@@ -22,7 +22,6 @@ class OrderStatus {
      */
     protected $status;
 
-
     /**
      * Get id
      *
@@ -54,5 +53,45 @@ class OrderStatus {
     public function getStatus()
     {
         return $this->status;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->orders = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add orders
+     *
+     * @param \PP5\MovieUniverseBundle\Entity\Order\Order $orders
+     * @return OrderStatus
+     */
+    public function addOrder(\PP5\MovieUniverseBundle\Entity\Order\Order $orders)
+    {
+        $this->orders[] = $orders;
+
+        return $this;
+    }
+
+    /**
+     * Remove orders
+     *
+     * @param \PP5\MovieUniverseBundle\Entity\Order\Order $orders
+     */
+    public function removeOrder(\PP5\MovieUniverseBundle\Entity\Order\Order $orders)
+    {
+        $this->orders->removeElement($orders);
+    }
+
+    /**
+     * Get orders
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getOrders()
+    {
+        return $this->orders;
     }
 }

@@ -5,7 +5,7 @@ namespace PP5\MovieUniverseBundle\Entity\Order;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="PP5\MovieUniverseBundle\Repository\OrderItemRepository")
  * @ORM\Table()
  */
 class OrderItem {
@@ -34,6 +34,11 @@ class OrderItem {
      */
     protected $price;
 
+    public function equals(OrderItem $otherOrderItem)
+    {
+        return ($this->movie === $otherOrderItem->getMovie()
+            && $this->order === $otherOrderItem->getOrder());
+    }
 
     /**
      * Get id
