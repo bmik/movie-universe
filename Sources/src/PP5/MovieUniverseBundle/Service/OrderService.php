@@ -104,9 +104,13 @@ class OrderService {
 
     }
 
-    public function getQuantity()
+    public function getQuantity($orderId)
     {
+        $orderRepository = $this->entityManager->getRepository('PP5MovieUniverseBundle:Order\Order');
 
+        $order = $orderRepository->getOrderWithItems($orderId);
+
+        return $order->getOrderItems()->count();
     }
 
     public function getTotal()
