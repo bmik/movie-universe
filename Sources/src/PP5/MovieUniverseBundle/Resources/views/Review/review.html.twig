@@ -7,7 +7,7 @@
 {% block content %}
 	{% if app.user %}
 		<div align="center">
-		<h3>Nowa recenzja filmu</h3>
+		<h3>Dodaj recenzję filmu</h3>
 		<h2><a href="{{ path('movie', {'slug': movie.id}) }}">{{ movie.title }}</a></h2>
 			<form method="POST">
 				{{ form_start(form) }}

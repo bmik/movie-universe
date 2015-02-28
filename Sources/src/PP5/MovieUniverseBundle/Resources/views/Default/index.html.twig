@@ -10,17 +10,19 @@
 			<tr>
 				<td width=400 valign="top" cellspacing="20">
 					<h1>Dostępne filmy</h1>
-					<p><ul>
 						{% for available_movie in available_movies %}
-							<li><a href="{{ 'movie/' ~ available_movie.id  }}">
-							{{ available_movie.title }}</a><br>
-						{% endfor %}
-					</ul></p>					
+								<div style="width: 125px; height: 220px; float: left; text-align: center">
+									<a href="{{ path('movie', {'slug': available_movie.id}) }}">
+										<img src="{{ asset('bundles/pp5movieuniverse/images/' ~ available_movie.id ~ '.png'	) }}" width="120"/>
+										{{ available_movie.title }}
+									</a>
+								</div>
+						{% endfor %}					
 				</td>
-				<td width=400 valign="top" cellspacing="20">	
+				<td width=400 valign="top" cellspacing="20">
 					<h1>Najczęściej wypożyczane</h1>
 					<p><ol>
-						{% for most_ordered_movie in most_ordered_movies %}
+						{% for most_ordered_movie in most_ordered_movies|slice(0, 5) %}
 							<li>{{ most_ordered_movie.title }} <br>
 						{% endfor %}
 					</ol></p>
@@ -28,20 +30,20 @@
 			</tr>
 			<tr>
 				<td width=400 valign="top" cellspacing="20">
-					<h1>Najczęściej recenzowane</h1>
-					<p><ol>
-						{% for most_reviewed_movie in most_reviewed_movies %}
-							<li><a href="{{ 'movie/' ~ most_reviewed_movie.id  }}">{{ most_reviewed_movie.title }}</a> <br>
-						{% endfor %}
-					</ol></p>
-				</td>
-				<td width=400 valign="top" cellspacing="20">
-					<h1>Gatunki filmów</h1>
+				<h1>Gatunki filmów</h1>
 					<p><ul>
 						{% for genre in genres %}
 							<li>{{ genre.name }} <br>
 						{% endfor %}
 					</ul></p>
+				</td>
+				<td width=400 valign="top" cellspacing="20">
+					<h1>Najczęściej recenzowane</h1>
+					<p><ol>
+						{% for most_reviewed_movie in most_reviewed_movies|slice(0, 5) %}
+							<li><a href="{{ path('movie', {'slug': most_reviewed_movie.id}) }}">{{ most_reviewed_movie.title }}</a> <br>
+						{% endfor %}
+					</ol></p>
 				</td>
 			</tr>
 		</table>

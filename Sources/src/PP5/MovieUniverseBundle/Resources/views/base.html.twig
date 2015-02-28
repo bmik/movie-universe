@@ -1,4 +1,4 @@
-﻿<html>
+<html>
 	<head>
 		<title>{% block title %}{% endblock %} - Movie Universe</title>
 		<style type="text/css">
@@ -20,7 +20,7 @@
 			{% elseif not app.user %}
 				<div align="center">
 					<br>Witaj Nieznajomy!<br>
-					<a href="#koszyk">Koszyk</a> | <a href="{{ path('fos_user_security_login') }}">Zaloguj</a> | <a href="{{ path('fos_user_registration_register') }}">Zarejestruj</a>
+					<a href="{{ path('cart') }}">Koszyk</a> | <a href="{{ path('fos_user_security_login') }}">Zaloguj</a> | <a href="{{ path('fos_user_registration_register') }}">Zarejestruj</a>
 				</div>
 			{% endif %}
 			
