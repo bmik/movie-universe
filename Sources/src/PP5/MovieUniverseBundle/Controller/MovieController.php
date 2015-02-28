@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 class MovieController extends Controller
 {
     /**
-     * @Route("/movie/{slug}", requirements={
+     * @Route("/movie/{slug}", name="movie", requirements={
 	*		"page": "\d+"
 	 * })
      * @Template()

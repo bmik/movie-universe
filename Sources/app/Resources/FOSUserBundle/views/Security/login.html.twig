@@ -1,9 +1,10 @@
 {% extends 'PP5MovieUniverseBundle::base.html.twig' %}
+
 {% trans_default_domain 'FOSUserBundle' %}
 
 {% block content %}
 {% if error %}
-    <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    <div><h4>{{ error.messageKey|trans(error.messageData, 'security') }}</h4></div>
 {% endif %}
 
 <form action="{{ path("fos_user_security_check") }}" method="post">
@@ -20,4 +21,7 @@
 
     <input type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" />
 </form>
+
+<h4>Nie masz jeszcze konta? <a href="{{ path('fos_user_registration_register') }}">Zarejestruj się</a> już teraz!</h4>
+
 {% endblock content %}
