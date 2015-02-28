@@ -9,7 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class MovieController extends Controller
 {
     /**
-     * @Route("/movie/{slug}", requirements={
+     * @Route("/movie/{slug}", name="movie", requirements={
 	*		"page": "\d+"
 	 * })
      * @Template()

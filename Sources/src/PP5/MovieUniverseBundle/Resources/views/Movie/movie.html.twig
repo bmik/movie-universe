@@ -37,8 +37,13 @@
 						{% endfor %}
 					</ul></p>
 					<p>
+						{% for flashMessage in app.session.flashbag.get('notice') %}
+							<div align="center">
+								<h4>{{ flashMessage }}</h4>
+							</div>
+						{% endfor %}
 						{% if app.user %}
-							<input type="button" value="Dodaj swoją recenzję">
+							<div align="center"><form method="post" action="{{ path('add_review', {'slug': movie.id}) }}"><input type="submit" value="Dodaj swoją recenzję"></form></div>
 						{% elseif not app.user %}
 							<h4>Bardzo nam przykro, lecz tylko zalogowani użytkownicy mogą dodawać recenzje.</h4>
 						{% endif %}
