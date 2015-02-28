@@ -2,6 +2,7 @@
 
 namespace PP5\MovieUniverseBundle\Entity\User;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -44,6 +45,33 @@ class User extends BaseUser
      * )
      */
     protected $surname;
+
+    /**
+     * @ORM\OneToMany(targetEntity="PP5\MovieUniverseBundle\Entity\Order\Order", mappedBy="user")
+     */
+    protected $orders;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->orders = new ArrayCollection();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOrders()
+    {
+        return $this->orders;
+    }
+
+    /**
+     * @param mixed $orders
+     */
+    public function setOrders($orders)
+    {
+        $this->orders = $orders;
+    }
 
     /**
      * Get id
@@ -99,5 +127,28 @@ class User extends BaseUser
     public function getSurname()
     {
         return $this->surname;
+    }
+
+    /**
+     * Add orders
+     *
+     * @param \PP5\MovieUniverseBundle\Entity\Order\Order $orders
+     * @return User
+     */
+    public function addOrder(\PP5\MovieUniverseBundle\Entity\Order\Order $orders)
+    {
+        $this->orders[] = $orders;
+
+        return $this;
+    }
+
+    /**
+     * Remove orders
+     *
+     * @param \PP5\MovieUniverseBundle\Entity\Order\Order $orders
+     */
+    public function removeOrder(\PP5\MovieUniverseBundle\Entity\Order\Order $orders)
+    {
+        $this->orders->removeElement($orders);
     }
 }

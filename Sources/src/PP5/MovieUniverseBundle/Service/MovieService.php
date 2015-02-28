@@ -5,7 +5,6 @@ namespace PP5\MovieUniverseBundle\Service;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
 use PP5\MovieUniverseBundle\Entity\Movie\Review;
-use PP5\MovieUniverseBundle\Repository\MovieRepository;
 
 class MovieService {
 

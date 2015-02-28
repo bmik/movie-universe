@@ -4,6 +4,10 @@ parameters:
 #    parameter_name: value
      pp5_movie_universe.movie_service.class: PP5\MovieUniverseBundle\Service\MovieService
      pp5_movie_universe.registration.form.type.class: PP5\MovieUniverseBundle\Form\Type\RegistrationFormType
+     pp5_movie_universe.order_item.service.class: PP5\MovieUniverseBundle\Service\OrderItemService
+     pp5_movie_universe.order.service.class: PP5\MovieUniverseBundle\Service\OrderService
+     pp5_movie_universe.user.service.class: PP5\MovieUniverseBundle\Service\UserService
+
 services:
 #    service_name:
 #        class: AppBundle\Directory\ClassName
@@ -14,7 +18,20 @@ services:
         arguments:
             - @=service('doctrine.orm.default_entity_manager')
 
-    pp5_movie_unniverse.registration.form.type:
+    pp5_movie_universe.registration.form.type:
         class: %pp5_movie_universe.registration.form.type.class%
         tags:
             - { name: form.type, alias: pp5_movie_universe_registration}
+
+    pp5_movie_universe.order_item.service:
+        class: %pp5_movie_universe.order_item.service.class%
+
+    pp5_movie_universe.order.service:
+        class: %pp5_movie_universe.order.service.class%
+        arguments:
+            - @=service('doctrine.orm.default_entity_manager')
+
+    pp5_movie_universe.user.service:
+        class: %pp5_movie_universe.user.service.class%
+        arguments:
+            - @=service('doctrine.orm.default_entity_manager')
