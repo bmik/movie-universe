@@ -1,8 +1,6 @@
 <?php
 
-
 namespace PP5\MovieUniverseBundle\Controller;
-
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -13,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 class OrderCartController extends Controller {
 
     /**
-     * @Route("/cart")
+     * @Route("/cart", name="cart")
      */
     public function indexAction(Request $request)
     {
@@ -64,7 +62,24 @@ class OrderCartController extends Controller {
 
         $response->sendHeaders();
 
+		$this->get('session')->getFlashBag()->set('notice', 'Film pomyślnie dodany do koszyka!');
+		
         return $response;
     }
 
+	/**
+     * @Route("/cart/remove?orderId={orderId}&movieId={movieId}", name="cart.remove_item")
+     */
+	public function removeMovieFromCartAction($orderId, $movieId)
+	{		
+		$orderService = $this->get('pp5_movie_universe.order.service');
+		
+		$orderService->removeMovie($orderId, $movieId);
+		
+		$this->get('session')->getFlashBag()->set('notice', 'Film usunięty z koszyka!');
+		 
+		return $this->redirect($this->generateUrl('cart'));
+		
+	}
+	
 } 

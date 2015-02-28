@@ -4,6 +4,12 @@
 	{{ movie.title }}
 {% endblock %}
 
+{% block notice %}
+	{% for flashMessage in app.session.flashbag.get('notice') %}
+		{{ flashMessage }}
+	{% endfor %}
+{% endblock %}
+
 {% block content %}
 
 		<table width=820 align=center>
@@ -18,9 +24,9 @@
 					<h1>O filmie + wypożycz</h1>
 					<p>
 						<big><b>Cena: {{ movie.price }}zł</b></big>
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
                         <form action="{{ path('cart.add_item', {slug : movie.id}) }}">
-                        <input type="submit" value="Wypożycz!">
+							<input type="submit" value="Wypożycz!">
                         </form>
 
 					</p>
@@ -44,11 +50,6 @@
 						{% endfor %}
 					</ul></p>
 					<p>
-						{% for flashMessage in app.session.flashbag.get('notice') %}
-							<div align="center">
-								<h4>{{ flashMessage }}</h4>
-							</div>
-						{% endfor %}
 						{% if app.user %}
 							<div align="center"><form method="post" action="{{ path('add_review', {'slug': movie.id}) }}"><input type="submit" value="Dodaj swoją recenzję"></form></div>
 						{% elseif not app.user %}

@@ -35,8 +35,7 @@ class ReviewController extends Controller
 		{
 			$movieService->addReview($slug, $review);
  
-			$session = $this->getRequest()->getSession();
-			$session->getFlashBag()->add('notice', 'Recenzja zapisana!');
+			$this->get('session')->getFlashBag()->set('notice', 'Recenzja zapisana!');
  
 			return $this->redirect($this->generateUrl('movie', array('slug' => $slug)));
 		}
