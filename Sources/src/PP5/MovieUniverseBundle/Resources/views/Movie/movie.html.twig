@@ -26,7 +26,7 @@
 						<big><b>Cena: {{ movie.price }}zł</b></big>
 
                         <form action="{{ path('cart.add_item', {slug : movie.id}) }}">
-							<input type="submit" value="Wypożycz!">
+							<input type="submit" value="Wypożycz">
                         </form>
 
 					</p>
@@ -44,14 +44,13 @@
 				<td width=400 colspan=2 valign="top" cellspacing="20">
 					<h1>Recenzje użytkowników:</h1>
 					<p><ul>
-					
 						{% for review in movie.reviews %}
 							<li>{{ review.reviewContent }}
 						{% endfor %}
 					</ul></p>
 					<p>
 						{% if app.user %}
-							<div align="center"><form method="post" action="{{ path('add_review', {'slug': movie.id}) }}"><input type="submit" value="Dodaj swoją recenzję"></form></div>
+							<div align="center"><form method="post" action="{{ path('add_review', {'slug': movie.id}) }}"><input type="submit" value="Dodaj recenzję"></form></div>
 						{% elseif not app.user %}
 							<h4>Bardzo nam przykro, lecz tylko zalogowani użytkownicy mogą dodawać recenzje.</h4>
 						{% endif %}
