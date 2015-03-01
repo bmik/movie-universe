@@ -15,16 +15,22 @@
 			<header>
 				<a href="{{ path('home') }}"><img src="{{ asset('bundles/pp5movieuniverse/images/logo.png') }}"></a>
 			</header>
-		
+			
+			{% if (app.request.cookies.has('ORDERID') or app.user) %}
+                {% set quantity = order_management.quantity(order_management.order(app.request.cookies.get('ORDERID'), app.user).id) %}
+			{% else %}
+				{% set quantity = 0 %}
+            {% endif %}
+			
 			{% if app.user %}
 				<div align="center">
 					<br>Witaj {{ app.user.name }} {{ app.user.surname }}!<br>
-					<a href="{{ path('cart') }}">Koszyk</a> | <a href="{{ path('fos_user_security_logout') }}">Wyloguj</a>
+					<a href="{{ path('cart') }}">Koszyk [{{ quantity }}]</a> | <a href="{{ path('fos_user_security_logout') }}">Wyloguj</a>
 				</div>
 			{% elseif not app.user %}
 				<div align="center">
 					<br>Witaj Nieznajomy!<br>
-					<a href="{{ path('cart') }}">Koszyk</a> | <a href="{{ path('fos_user_security_login') }}">Zaloguj</a> | <a href="{{ path('fos_user_registration_register') }}">Zarejestruj</a>
+					<a href="{{ path('cart') }}">Koszyk [{{ quantity }}]</a> | <a href="{{ path('fos_user_security_login') }}">Zaloguj</a> | <a href="{{ path('fos_user_registration_register') }}">Zarejestruj</a>
 				</div>
 			{% endif %}
 			

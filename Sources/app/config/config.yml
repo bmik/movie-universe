@@ -29,6 +29,8 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    globals:
+        order_management: "@pp5_movie_universe.order.service"
 
 # Assetic Configuration
 assetic:
