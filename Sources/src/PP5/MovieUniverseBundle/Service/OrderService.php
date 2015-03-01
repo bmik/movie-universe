@@ -7,6 +7,7 @@ use PP5\MovieUniverseBundle\Entity\Movie\Movie;
 use PP5\MovieUniverseBundle\Entity\Order\Order;
 use PP5\MovieUniverseBundle\Entity\Order\OrderItem;
 use PP5\MovieUniverseBundle\Entity\User\User;
+use PP5\MovieUniverseBundle\Handler\OrderNumberHandler;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -97,11 +98,6 @@ class OrderService {
         }
 
         return true;
-    }
-
-    public function getNumber()
-    {
-
     }
 
     public function getQuantity($orderId)
