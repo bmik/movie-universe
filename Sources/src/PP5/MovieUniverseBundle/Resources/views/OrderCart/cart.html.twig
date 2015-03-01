@@ -1,7 +1,56 @@
 {% extends 'PP5MovieUniverseBundle::base.html.twig' %}
 
-{% block content %}
+{% block title %}
+	Koszyk
+{% endblock %}
 
-    {{  dump(order) }}
+{% block notice %}
+	{% for flashMessage in app.session.flashbag.get('notice') %}
+		{{ flashMessage }}
+	{% endfor %}
+{% endblock %}
+
+{% block content %}
+	<div style="text-align: center"><h1>Koszyk</h1></div>
+		<table style="width: 500px; margin-left:auto; margin-right:auto">
+			<tr style="text-align: center">
+				<td style="width: 50px"><b>Lp</b></td>
+				<td><b>Tytuł</b></td>
+				<td style="width: 50px"><b>Cena</b></td>
+				<td style="width: 50px"><b>Usuń</b></td>
+			</tr>
+			{% if order %}
+				{% for item in order.orderItems %}
+					<tr>
+						<td style="text-align: center">{{ loop.index }}.</td>
+						<td><a href="{{ path('movie', {'slug': item.movie.id}) }}">{{ item.movie.title }}</a></td>
+						<td style="text-align:center">{{ item.movie.price }}</td>
+						<td style="text-align:center">
+							<form action="{{ path('cart.remove_item', {orderId : order.id, movieId : item.movie.id}) }}">
+								<input type="submit" value="X">
+							</form>
+						</td>
+					</tr>
+				{% endfor %}
+					<tr>
+						<td colspan=4 style="text-align: right">
+							<form action="{{ path('cart.clear', {orderId : order.id}) }}">
+								<input type="submit" value="Wyczyść">
+							</form>
+						</td>
+					</tr>
+					<tr style="height: 80px">
+						<td colspan=4 style="text-align: center">
+							<form action="{{ path('cart.completeOrder', {orderId : order.id}) }}">
+								<input type="submit" value="Zrealizuj zamówienie">
+							</form>
+						</td>
+					</tr>
+			{% else %}
+				<tr style="text-align: center">
+					<td colspan=4>Twój koszyk jest pusty</td>
+				</tr>
+			{% endif %}
+		</table>
 
 {% endblock %}
