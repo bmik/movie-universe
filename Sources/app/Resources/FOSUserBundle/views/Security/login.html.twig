@@ -10,22 +10,44 @@
 {% if error %}
     <div><h4>{{ error.messageKey|trans(error.messageData, 'security') }}</h4></div>
 {% endif %}
-
 <form action="{{ path("fos_user_security_check") }}" method="post">
-    <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
-
-    <label for="username">{{ 'security.login.username'|trans }}</label>
-    <input type="text" id="username" name="_username" value="{{ last_username }}" required="required" /><br>
-
-    <label for="password">{{ 'security.login.password'|trans }}</label>
-    <input type="password" id="password" name="_password" required="required" /><br>
-
-    <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
-    <label for="remember_me">{{ 'security.login.remember_me'|trans }}</label><br>
-
-    <input type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" />
+<input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+	<table style="width: 400px; margin-left: auto; margin-right: auto">
+		<tr>
+			<td style="text-align: right">
+				<label for="username">{{ 'security.login.username'|trans }}</label>
+			</td>
+			<td>
+				<input type="text" id="username" name="_username" value="{{ last_username }}" required="required" />
+			</td>
+		</tr>
+		<tr>
+			<td style="text-align: right">
+				<label for="password">{{ 'security.login.password'|trans }}</label>
+			</td>
+			<td>
+				<input type="password" id="password" name="_password" required="required" />
+			</td>
+		</tr>
+		<tr>
+			<td>
+			</td>
+			<td>
+				<input type="checkbox" id="remember_me" name="_remember_me" value="on" /><label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
+			</td>
+		</tr>
+		<tr>
+			<td colspan=2 style="text-align: center">
+				<input type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" />
+			</td>
+		</tr>
+		<tr>
+			<td colspan=2 style="text-align: center">
+				<br><h4>Nie masz jeszcze konta?	<a href="{{ path('fos_user_registration_register') }}">Zarejestruj się</a> już teraz!</h4>
+			</td>
+		</tr>
+	</table>
 </form>
 
-<h4>Nie masz jeszcze konta? <a href="{{ path('fos_user_registration_register') }}">Zarejestruj się</a> już teraz!</h4>
 
 {% endblock content %}
