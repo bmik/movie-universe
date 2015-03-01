@@ -4,17 +4,10 @@ namespace PP5\MovieUniverseBundle\Handler;
 
 class OrderNumberHandler {
 
-    protected $orderId;
 
-    public function __construct($orderId)
+    public static function generateNumber($orderId)
     {
-        $this->orderId = $orderId;
-    }
-
-
-    public function generateNumber()
-    {
-        $prefix = $this->generateRandomPrefix();
+        $prefix = self::generateRandomPrefix();
 
         $datetime = new \DateTime();
 
@@ -24,12 +17,12 @@ class OrderNumberHandler {
 
         $date = sprintf("%s%s%s", $day, $month, $year);
 
-        $suffix = sprintf("%s-%s", "O", $this->orderId);
+        $suffix = sprintf("%s-%s", "O", $orderId);
 
         return $prefix."/".$date."/".$suffix;
     }
 
-    private function generateRandomPrefix()
+    private static function generateRandomPrefix()
     {
         $chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 

@@ -7,9 +7,8 @@ use PP5\MovieUniverseBundle\Entity\Movie\Movie;
 use PP5\MovieUniverseBundle\Entity\Order\Order;
 use PP5\MovieUniverseBundle\Entity\Order\OrderItem;
 use PP5\MovieUniverseBundle\Entity\User\User;
+use PP5\MovieUniverseBundle\Enum\OrderStatus;
 use PP5\MovieUniverseBundle\Handler\OrderNumberHandler;
-use Symfony\Component\HttpFoundation\Cookie;
-use Symfony\Component\HttpFoundation\Request;
 
 class OrderService {
 
@@ -18,6 +17,15 @@ class OrderService {
     public function __construct(EntityManager $entityManager)
     {
         $this->entityManager = $entityManager;
+    }
+
+    public function getOrderByID($orderId)
+    {
+        $orderRepository = $this->entityManager->getRepository('PP5MovieUniverseBundle:Order\Order');
+
+        $order = $orderRepository->find($orderId);
+
+        return $order;
     }
 
     public function getOrder($cookie, User $user = null)
@@ -106,23 +114,56 @@ class OrderService {
 
         $order = $orderRepository->getOrderWithItems($orderId);
 
-        return $order->getOrderItems()->count();
+        if ($order) {
+            $quantity = $order->getOrderItems()->count();
+        } else {
+            $quantity = 0;
+        }
+        return $quantity;
     }
 
-    public function getTotal()
+    public function getTotal($orderId)
     {
+        $orderRepository = $this->entityManager->getRepository('PP5MovieUniverseBundle:Order\Order');
 
+        $order = $orderRepository->getOrderWithItems($orderId);
+
+        $sum = 0;
+
+        foreach ($order->getOrderItems() as $orderItem) {
+            $sum += $orderItem->getPrice();
+        }
+
+        return $sum;
     }
 
-    public function completeOrder()
+    public function prepareForPayment($orderId)
     {
+        $order = $this->getOrderByID($orderId);
 
+        $status = $this->getStatus(OrderStatus::ORDER_STATUS_TO_PAY);
+        $number = OrderNumberHandler::generateNumber($orderId);
+
+        $order->setStatus($status);
+        $order->setNumber($number);
+
+        $this->entityManager->flush();
+    }
+
+    public function completeOrder($orderId)
+    {
+        $order = $this->getOrderByID($orderId);
+
+        $status = $this->getStatus(OrderStatus::ORDER_STATUS_COMPLETED);
+        $order->setStatus($status);
+
+        $this->entityManager->flush();
     }
 
     private function createNewOrder(User $user = null)
     {
         $order = new Order();
-        $status = $this->entityManager->getRepository('PP5MovieUniverseBundle:Order\OrderStatus')->find(1);
+        $status = $this->getStatus(OrderStatus::ORDER_STATUS_PENDING);
         $order->setStatus($status);
         if ($user != null) {
             $order->setUser($user);
@@ -157,6 +198,14 @@ class OrderService {
         }
 
         return $order;
+    }
+
+    private function getStatus($statusId)
+    {
+        $statusRepository = $this->entityManager->getRepository('PP5MovieUniverseBundle:Order\OrderStatus');
+        $status = $statusRepository->find($statusId);
+
+        return $status;
     }
 
 } 

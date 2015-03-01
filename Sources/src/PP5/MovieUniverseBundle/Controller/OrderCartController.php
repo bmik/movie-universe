@@ -2,11 +2,14 @@
 
 namespace PP5\MovieUniverseBundle\Controller;
 
+use PP5\MovieUniverseBundle\Handler\PaymentProviderURLHandler;
+use PP5\MovieUniverseBundle\Service\PaymentService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class OrderCartController extends Controller {
 
@@ -23,6 +26,12 @@ class OrderCartController extends Controller {
         $loggedUser = $userService->getLoggedUser($loggedUserName);
 
         $order = $orderService->getOrderWithItems($orderCookie, $loggedUser);
+
+        if ($order) {
+            $total = $orderService->getTotal($order->getId());
+        } else {
+            $total = 0;
+        }
 
         return $this->render('@PP5MovieUniverse/OrderCart/cart.html.twig',
             array("order" => $order));
@@ -98,12 +107,39 @@ class OrderCartController extends Controller {
 	}
 	
 	/**
-     * @Route("/cart/complete?orderId={orderId}", name="cart.completeOrder")
+     * @Route("/cart/complete/pay?orderId={orderId}", name="cart.completeOrder")
      */
 	public function completeOrderAction($orderId)
 	{
-		$this->get('session')->getFlashBag()->set('notice', 'Kiedyś zrealizujemy to zamówienie! :)');
-		
-		return $this->redirect($this->generateUrl('cart'));
-	}
+        $orderService = $this->get('pp5_movie_universe.order.service');
+        $order = $orderService->getOrderByID($orderId);
+        $total = $orderService->getTotal($orderId);
+
+        $orderService->prepareForPayment($orderId);
+
+        $urlc = $this->generateUrl('cart.complete.handle', array("orderId" => $orderId), true);
+        $url = $this->generateUrl('home', array(), true);
+        $customerId = $this->container->getParameter('dotpay_id');
+
+        $url = PaymentProviderURLHandler::generateURL($order, $total, $url, $urlc, $customerId);
+
+        return new RedirectResponse($url);
+    }
+
+
+    /**
+     * @Route("/cart/complete/handle?orderId={orderId}", name="cart.complete.handle")
+     */
+    public function handleAction(Request $request, $orderId) {
+
+        $logger = $this->get('monolog.logger.dotpay');
+        $logger->info("============= NEW URLC NOTIFICATION ==============");
+        $logger->info(var_export($request->request, true));
+
+        $response = $this->get('pp5_movie_universe.payment.service')->handleRequest($request);
+
+        $logger->info(var_export($response, true));
+
+        return new Response("OK");
+    }
 } 
