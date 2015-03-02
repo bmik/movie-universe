@@ -29,6 +29,8 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    globals:
+        order_management: "@pp5_movie_universe.order.service"
 
 # Assetic Configuration
 assetic:
@@ -79,3 +81,11 @@ fos_user:
     registration:
         form:
             type: pp5_movie_universe_registration
+
+monolog:
+    channels: ["dotpay"]
+    handlers:
+        dotpay:
+            type: stream
+            path: %kernel.root_dir%/logs/dotpay.log
+            channels: ["dotpay"]

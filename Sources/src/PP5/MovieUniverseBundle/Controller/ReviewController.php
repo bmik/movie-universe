@@ -29,17 +29,18 @@ class ReviewController extends Controller
  
 		$form->handleRequest($request);
 		
+		$movie = $movieService->getMovie($slug);
+		
 		if ($form->isValid())
 		{
 			$movieService->addReview($slug, $review);
  
-			$session = $this->getRequest()->getSession();
-			$session->getFlashBag()->add('notice', 'Recenzja zapisana!');
+			$this->get('session')->getFlashBag()->set('notice', 'Recenzja zapisana!');
  
 			return $this->redirect($this->generateUrl('movie', array('slug' => $slug)));
 		}
 	
-		return $this->render('PP5MovieUniverseBundle:Review:review.html.twig', array('form' => $form->createView()));
+		return $this->render('PP5MovieUniverseBundle:Review:review.html.twig', array('form' => $form->createView(), 'movie' => $movie));
 	 
 	 }
 

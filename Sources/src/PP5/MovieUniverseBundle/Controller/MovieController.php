@@ -25,7 +25,8 @@ class MovieController extends Controller
 
         return $this->render('PP5MovieUniverseBundle:Movie:movie.html.twig',
             array(
-                'movie' => $movie,
-            ));
+                'movie' => $movie
+            )
+		);
     }
 }
