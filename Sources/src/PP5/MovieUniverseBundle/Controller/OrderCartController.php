@@ -51,23 +51,18 @@ class OrderCartController extends BaseController {
             $order = $orderService->getOrderByID($orderId);
         }
 
-<<<<<<< HEAD
-        if ($orderCookie && $isLoggedUser) {
-            $response->headers->clearCookie('ORDERID');
-=======
         $orderService->addMovie($order, $movie);
 
         if (!$orderId && !$user) {
             $orderCookie = new Cookie(ApplicationConstantName::COOKIE_ORDER_ID,
                 $order->getId(), (time() + (3600 * 24 * 3)));
             $response->headers->setCookie($orderCookie);
->>>>>>> order-cart-feature
         }
 
         $response->sendHeaders();
 
-		$this->get('session')->getFlashBag()->set('notice', 'Film dodany do koszyka!');
-		
+        $this->get('session')->getFlashBag()->set('notice', 'Film dodany do koszyka!');
+
         return $response;
     }
 
