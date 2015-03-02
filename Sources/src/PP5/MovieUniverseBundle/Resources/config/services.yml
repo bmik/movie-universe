@@ -8,6 +8,7 @@ parameters:
      pp5_movie_universe.order.service.class: PP5\MovieUniverseBundle\Service\OrderService
      pp5_movie_universe.user.service.class: PP5\MovieUniverseBundle\Service\UserService
      pp5_movie_universe.payment.service.class: PP5\MovieUniverseBundle\Service\PaymentService
+     pp5_movie_universe.before_controller.service.class: PP5\MovieUniverseBundle\Listener\BeforeControllerListener
 
 services:
 #    service_name:
@@ -44,3 +45,10 @@ services:
             - %dotpay_pin%
             - @=service('doctrine.orm.default_entity_manager')
             - @pp5_movie_universe.order.service
+
+    pp5_movie_universe.before_controller.service:
+        class: %pp5_movie_universe.before_controller.service.class%
+        arguments:
+            - @security.context
+        tags:
+            - {name: kernel.event_listener, event: kernel.controller, method: onKernelController}

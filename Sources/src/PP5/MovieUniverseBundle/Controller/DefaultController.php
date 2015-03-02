@@ -2,13 +2,10 @@
 
 namespace PP5\MovieUniverseBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Component\HttpFoundation\Request;
 
-class DefaultController extends Controller
-{
+class DefaultController extends BaseController {
     /**
      * @Route("/home", name="home")
      * @Template()
