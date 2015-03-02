@@ -22,25 +22,23 @@ class OrderService {
     public function getOrderByID($orderId)
     {
         $orderRepository = $this->entityManager->getRepository('PP5MovieUniverseBundle:Order\Order');
-
         $order = $orderRepository->find($orderId);
 
         return $order;
     }
 
-    public function getOrder($cookie, User $user = null)
+    public function getOrderByUser(User $user = null)
     {
-        $order = $this->handleOrderExists($cookie, $user);
+        $orderRepository = $this->entityManager->getRepository('PP5MovieUniverseBundle:Order\Order');
+        $order = $orderRepository->findOneBy(array("user" => $user, "status" => OrderStatus::ORDER_STATUS_PENDING));
+
         return $order;
     }
 
-    public function getOrderWithItems($cookie, User $user = null)
+    public function getOrderWithItems($orderId)
     {
         $orderRepository = $this->entityManager->getRepository('PP5MovieUniverseBundle:Order\Order');
-
-        $order = $this->handleOrderExists($cookie, $user);
-
-        $fullOrder = $orderRepository->getOrderWithItems($order->getId());
+        $fullOrder = $orderRepository->getOrderWithItems($orderId);
 
         return $fullOrder;
     }
@@ -160,7 +158,7 @@ class OrderService {
         $this->entityManager->flush();
     }
 
-    private function createNewOrder(User $user = null)
+    public function createNewOrder(User $user = null)
     {
         $order = new Order();
         $status = $this->getStatus(OrderStatus::ORDER_STATUS_PENDING);
@@ -176,7 +174,7 @@ class OrderService {
         return $order;
     }
 
-    private function handleOrderExists($cookie, User $loggedUser = null)
+    /*private function handleOrderExists($cookie, User $loggedUser = null)
     {
         $orderRepository = $this->entityManager->getRepository('PP5MovieUniverseBundle:Order\Order');
 
@@ -198,7 +196,7 @@ class OrderService {
         }
 
         return $order;
-    }
+    }*/
 
     private function getStatus($statusId)
     {

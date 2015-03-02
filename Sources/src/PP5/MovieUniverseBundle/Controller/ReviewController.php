@@ -2,15 +2,13 @@
 
 namespace PP5\MovieUniverseBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use PP5\MovieUniverseBundle\Entity\Movie\Review;
+use PP5\MovieUniverseBundle\Form\Type\ReviewType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
-use PP5\MovieUniverseBundle\Entity\Movie\Review;
-use PP5\MovieUniverseBundle\Form\Type\ReviewType;
 
-class ReviewController extends Controller
-{
+class ReviewController extends BaseController {
     /**
      * @Route("/movie/{slug}/add_review", name="add_review", requirements={
 	*		"page": "\d+"

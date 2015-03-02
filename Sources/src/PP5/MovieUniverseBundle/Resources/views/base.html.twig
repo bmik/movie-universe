@@ -13,8 +13,10 @@
 				<a href="{{ path('home') }}"><img src="{{ asset('bundles/pp5movieuniverse/images/logo.png') }}"></a>
 			</header>
 			
-			{% if (app.request.cookies.has('ORDERID') or app.user) %}
-                {% set quantity = order_management.quantity(order_management.order(app.request.cookies.get('ORDERID'), app.user).id) %}
+			{% if (app.request.session.get('order_id')) %}
+                {% set quantity = order_management.quantity(order_management.orderByID(app.request.session.get('order_id')).id) %}
+            {% else %}
+                {% set quantity = 0 %}
             {% endif %}
 			
 			{% if app.user %}

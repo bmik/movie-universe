@@ -2,16 +2,16 @@
 
 namespace PP5\MovieUniverseBundle\Controller;
 
+use PP5\MovieUniverseBundle\Enum\ApplicationConstantName;
 use PP5\MovieUniverseBundle\Handler\PaymentProviderURLHandler;
-use PP5\MovieUniverseBundle\Service\PaymentService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\SecurityContextInterface;
 
-class OrderCartController extends Controller {
+class OrderCartController extends BaseController {
 
     /**
      * @Route("/cart", name="cart")
@@ -19,19 +19,9 @@ class OrderCartController extends Controller {
     public function indexAction(Request $request)
     {
         $orderService = $this->get('pp5_movie_universe.order.service');
-        $userService = $this->get('pp5_movie_universe.user.service');
+        $orderId = $request->getSession()->get(ApplicationConstantName::SESSION_ORDER_ID);
 
-        $orderCookie = $request->cookies->get('ORDERID');
-        $loggedUserName = $this->container->get('security.token_storage')->getToken()->getUsername();
-        $loggedUser = $userService->getLoggedUser($loggedUserName);
-
-        $order = $orderService->getOrderWithItems($orderCookie, $loggedUser);
-
-        if ($order) {
-            $total = $orderService->getTotal($order->getId());
-        } else {
-            $total = 0;
-        }
+        $order = $orderService->getOrderWithItems($orderId);
 
         return $this->render('@PP5MovieUniverse/OrderCart/cart.html.twig',
             array("order" => $order));
@@ -44,29 +34,29 @@ class OrderCartController extends Controller {
     {
         $orderService = $this->get('pp5_movie_universe.order.service');
         $movieService = $this->get('pp5_movie_universe.movie_service');
-        $userService = $this->get('pp5_movie_universe.user.service');
+        $userService  = $this->get('pp5_movie_universe.user.service');
 
         $url = $request->headers->get('referer');
         $response = new RedirectResponse($url);
 
-        $isLoggedUser = $this->container->get('security.context')->isGranted("ROLE_USER");
-        $loggedUserName = $this->container->get('security.token_storage')->getToken()->getUsername();
-        $loggedUser = $userService->getLoggedUser($loggedUserName);
+        $orderId = $request->getSession()->get(ApplicationConstantName::SESSION_ORDER_ID);
 
-        $orderCookie = $request->cookies->get('ORDERID');
-
-        $order = $orderService->getOrder($orderCookie, $loggedUser);
         $movie = $movieService->getMovie($slug);
+
+        $user = $userService->getLoggedUser($this->container->get('security.context')->getToken()->getUser());
+
+        if (!$orderId) {
+            $order = $orderService->createNewOrder($user);
+        } else {
+            $order = $orderService->getOrderByID($orderId);
+        }
 
         $orderService->addMovie($order, $movie);
 
-        if (!$orderCookie && !$isLoggedUser) {
-            $orderCookie = new Cookie('ORDERID', $order->getId(), (time() + (3600 * 24 * 3)));
+        if (!$orderId && !$user) {
+            $orderCookie = new Cookie(ApplicationConstantName::COOKIE_ORDER_ID,
+                $order->getId(), (time() + (3600 * 24 * 3)));
             $response->headers->setCookie($orderCookie);
-        }
-
-        if ($orderCookie && $isLoggedUser) {
-            $response->headers->removeCookie('ORDERID');
         }
 
         $response->sendHeaders();
