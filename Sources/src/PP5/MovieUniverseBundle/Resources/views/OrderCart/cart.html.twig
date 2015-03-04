@@ -11,7 +11,7 @@
 {% endblock %}
 
 {% block content %}
-	<div style="text-align: center"><h1>Koszyk</h1></div>
+	<div style="text-align: center"><h3>Koszyk</h3><br></div>
 		<table style="width: 500px; margin-left:auto; margin-right:auto">
 			<tr style="text-align: center">
 				<td style="width: 50px"><b>Lp</b></td>
@@ -27,7 +27,7 @@
 						<td style="text-align:center">{{ item.movie.price }}</td>
 						<td style="text-align:center">
 							<form action="{{ path('cart.remove_item', {orderId : order.id, movieId : item.movie.id}) }}">
-								<input type="submit" value="X">
+								<button type="submit" class="btn btn-danger btn-xs">X</button>
 							</form>
 						</td>
 					</tr>
@@ -35,14 +35,14 @@
 					<tr>
 						<td colspan=4 style="text-align: right">
 							<form action="{{ path('cart.clear', {orderId : order.id}) }}">
-								<input type="submit" value="Wyczyść">
+								<button type="submit" class="btn btn-warning btn-sm">Wyczyść</button>
 							</form>
 						</td>
 					</tr>
 					<tr style="height: 80px">
 						<td colspan=4 style="text-align: center">
 							<form action="{{ path('cart.completeOrder', {orderId : order.id}) }}">
-								<input type="submit" value="Zrealizuj zamówienie">
+								<button type="submit" class="btn btn-success btn-lg">Zrealizuj zamówienie</button>
 							</form>
 						</td>
 					</tr>
