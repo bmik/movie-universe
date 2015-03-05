@@ -9,7 +9,7 @@
 		<table style="width: 820px; margin-left: auto; margin-right: auto">
 			<tr>
 				<td colspan=2 style="vertical-align: top; width: 800px; text-align: center">
-					<h1>Dostępne filmy</h1>
+					<h2>Dostępne filmy</h2>
 						<div style="margin-left: auto; margin-right: auto; width: 800px">
 							{% for available_movie in available_movies %}
 								<div style="width: 160px; height: 220px; float: left; text-align: center">
@@ -26,7 +26,7 @@
 			
 			<tr>
 				<td style="vertical-align: top; width: 400px" cellspacing="20">
-					<h1>Najczęściej wypożyczane</h1>
+					<h2>Najczęściej wypożyczane</h2>
 					<p><ol>
 						{% for most_ordered_movie in most_ordered_movies|slice(0, 5) %}
 							<li>{{ most_ordered_movie.title }} <br>
@@ -35,7 +35,7 @@
 				</td>
 				
 				<td style="vertical-align: top; width: 400px" cellspacing="20">
-					<h1>Najczęściej recenzowane</h1>
+					<h2>Najczęściej recenzowane</h2>
 					<p><ol>
 						{% for most_reviewed_movie in most_reviewed_movies|slice(0, 5) %}
 							<li><a href="{{ path('movie', {'slug': most_reviewed_movie.id}) }}">{{ most_reviewed_movie.title }}</a> <br>
@@ -47,7 +47,7 @@
 			
 			<tr>
 				<td colspan=2 style="width:800; text-align: center" cellspacing="20">
-					<br><h1>Gatunki filmów</h1>
+					<br><h2>Gatunki filmów</h2>
 							{% for genre in genres %}
 								{{ genre.name }}
 								{% if not loop.last %} | {% endif %}

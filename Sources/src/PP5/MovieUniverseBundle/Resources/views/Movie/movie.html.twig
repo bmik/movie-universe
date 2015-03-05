@@ -15,18 +15,18 @@
 		<table width=820 align=center>
 			<tr>
 				<td width=400 valign="top" cellspacing="20">
-					<h1>{{ movie.title }}</h1>
+					<h2>{{ movie.title }}</h2>
 					<p>
 							<img src="{{ asset('bundles/pp5movieuniverse/images/' ~ movie.id ~ '.png'	) }}" />
 					</p>					
 				</td>
 				<td width=400 valign="top" cellspacing="20">	
-					<h1>O filmie</h1>
+					<h3>O filmie</h3>
 					<p>
 						<big><b>Cena: {{ movie.price }}zł</b></big>
 
                         <form action="{{ path('cart.add_item', {slug : movie.id}) }}">
-							<input type="submit" value="Wypożycz">
+							<button type="submit" class="btn btn-success">Wypożycz!</button>
                         </form>
 
 					</p>
@@ -42,15 +42,16 @@
 			</tr>
 			<tr>
 				<td width=400 colspan=2 valign="top" cellspacing="20">
-					<h1>Recenzje użytkowników:</h1>
-					<p><ul>
+					<h3>Recenzje użytkowników:</h3>
+					<p>
+					
 						{% for review in movie.reviews %}
-							<li>{{ review.reviewContent }}
+							<blockquote><small>{{ review.reviewContent }}</small></blockquote>
 						{% endfor %}
-					</ul></p>
+					</p>
 					<p>
 						{% if app.user %}
-							<div align="center"><form method="post" action="{{ path('add_review', {'slug': movie.id}) }}"><input type="submit" value="Dodaj recenzję"></form></div>
+							<div align="center"><form method="post" action="{{ path('add_review', {'slug': movie.id}) }}"><button type="submit" class="btn btn-info">Dodaj swoją recenzję</button></form></div>
 						{% elseif not app.user %}
 							<h4>Bardzo nam przykro, lecz tylko zalogowani użytkownicy mogą dodawać recenzje.</h4>
 						{% endif %}

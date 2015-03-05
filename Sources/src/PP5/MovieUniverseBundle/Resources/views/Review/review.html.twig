@@ -7,19 +7,19 @@
 {% block content %}
 	{% if app.user %}
 		<div align="center">
-		<h3>Dodaj recenzję filmu</h3>
-		<h2><a href="{{ path('movie', {'slug': movie.id}) }}">{{ movie.title }}</a></h2>
+		<h4>Dodaj recenzję filmu</h4>
+		<h3><a href="{{ path('movie', {'slug': movie.id}) }}">{{ movie.title }}</a></h3>
 			<form method="POST">
 				{{ form_start(form) }}
 					{{ form_errors(form) }}
-					{{ form_widget(form.reviewContent) }}<br>
-					<input type="submit" value="Wyślij recenzję"/>
+					{{ form_widget(form.reviewContent) }}<br><br>
+					<button type="submit" class="btn btn-info">Wyślij recenzję!</button>
 				{{ form_end(form) }}
 			</form>	
 		</div>
 	{% elseif not app.user %}
 		<div align="center">
-			<h3>Bardzo nam przykro, lecz tylko zalogowani użytkownicy mogą dodawać recenzje.</h3>
+			<h4>Bardzo nam przykro, lecz tylko zalogowani użytkownicy mogą dodawać recenzje.</h4>
 		</div>
 	{% endif %}
 
