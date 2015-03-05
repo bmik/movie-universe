@@ -1,0 +1,60 @@
+{% extends 'PP5MovieUniverseBundle::base.html.twig' %}
+
+{% block title %}
+	Home
+{% endblock %}
+
+{% block content %}
+
+		<table style="width: 820px; margin-left: auto; margin-right: auto">
+			<tr>
+				<td colspan=2 style="vertical-align: top; width: 800px; text-align: center">
+					<h2>Dostępne filmy</h2>
+						<div style="margin-left: auto; margin-right: auto; width: 800px">
+							{% for available_movie in available_movies %}
+								<div style="width: 160px; height: 220px; float: left; text-align: center">
+									<a href="{{ path('movie', {'slug': available_movie.id}) }}">
+										<img src="{{ asset('bundles/pp5movieuniverse/images/' ~ available_movie.id ~ '.png'	) }}" width="120"/><br>
+										{{ available_movie.title }}
+									</a>
+								</div>
+							{% endfor %}
+						</div>
+				</td>
+			</tr>
+			
+			
+			<tr>
+				<td style="vertical-align: top; width: 400px" cellspacing="20">
+					<h2>Najczęściej wypożyczane</h2>
+					<p><ol>
+						{% for most_ordered_movie in most_ordered_movies|slice(0, 5) %}
+							<li>{{ most_ordered_movie.title }} <br>
+						{% endfor %}
+					</ol></p>
+				</td>
+				
+				<td style="vertical-align: top; width: 400px" cellspacing="20">
+					<h2>Najczęściej recenzowane</h2>
+					<p><ol>
+						{% for most_reviewed_movie in most_reviewed_movies|slice(0, 5) %}
+							<li><a href="{{ path('movie', {'slug': most_reviewed_movie.id}) }}">{{ most_reviewed_movie.title }}</a> <br>
+						{% endfor %}
+					</ol></p>
+				</td>
+			</tr>
+			
+			
+			<tr>
+				<td colspan=2 style="width:800; text-align: center" cellspacing="20">
+					<br><h2>Gatunki filmów</h2>
+							{% for genre in genres %}
+								{{ genre.name }}
+								{% if not loop.last %} | {% endif %}
+							{% endfor %}
+				</td>
+			</tr>
+		</table>
+
+{% endblock %}
+

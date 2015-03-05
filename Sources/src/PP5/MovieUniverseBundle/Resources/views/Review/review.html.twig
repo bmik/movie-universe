@@ -1,0 +1,27 @@
+{% extends 'PP5MovieUniverseBundle::base.html.twig' %}
+
+{% block title %}
+	Dodaj recenzję filmu {{ movie.title }}
+{% endblock %}
+
+{% block content %}
+	{% if app.user %}
+		<div align="center">
+		<h4>Dodaj recenzję filmu</h4>
+		<h3><a href="{{ path('movie', {'slug': movie.id}) }}">{{ movie.title }}</a></h3>
+			<form method="POST">
+				{{ form_start(form) }}
+					{{ form_errors(form) }}
+					{{ form_widget(form.reviewContent) }}<br><br>
+					<button type="submit" class="btn btn-info">Wyślij recenzję!</button>
+				{{ form_end(form) }}
+			</form>	
+		</div>
+	{% elseif not app.user %}
+		<div align="center">
+			<h4>Bardzo nam przykro, lecz tylko zalogowani użytkownicy mogą dodawać recenzje.</h4>
+		</div>
+	{% endif %}
+
+{% endblock %}
+

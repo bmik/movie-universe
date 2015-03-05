@@ -1,0 +1,69 @@
+<html>
+	<head>
+		<title>{% block title %}{% endblock %} - Movie Universe</title>
+
+		<link rel="icon" type="image/png" href="{{ asset('bundles/pp5movieuniverse/images/fav.png') }}" />
+		<!-- Latest compiled and minified CSS --> <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">		
+		<!-- Optional theme --> <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+		<!-- Latest compiled and minified JavaScript --> <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+	</head>
+	<body>
+	
+
+		<nav class="navbar navbar-inverse" role="navigation" >
+			<div class="container">
+				<div class="navbar-header">
+					<a class="navbar-brand">
+						{% if app.user %}
+							Witaj {{ app.user.name }} {{ app.user.surname }}!
+						{% elseif not app.user %}
+							Witaj Nieznajomy!
+						{% endif %}
+					</a>
+				</div>
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="{{ path('home') }}">Home</a>
+						<li><a href="{{ path('cart') }}">Koszyk</a>
+							{% if app.user %}
+								<li><a href="{{ path('fos_user_security_logout') }}">Wyloguj</a>
+							{% elseif not app.user %}
+								<li><a href="{{ path('fos_user_security_login') }}">Zaloguj</a>
+								<li><a href="{{ path('fos_user_registration_register') }}">Zarejestruj</a>
+							{% endif %}
+					</ul>
+				</div>
+			</div>
+		</nav>
+	
+		<div class="container">
+			<header>
+				<div align="center">
+				<div class"row">
+					<div class="col-lg-12">
+						 <a href="{{ path('home') }}"><img src="{{ asset('bundles/pp5movieuniverse/images/logo2.png') }}" class="img-responsive"></a>
+					</div>
+				</div>
+				</div>
+			</header>
+				<br>&nbsp; 			
+			<div style="text-align: center;">
+				<h5>
+					{% block notice %}
+					{% endblock %}
+				</h5>
+			</div>
+			
+			
+			<section>
+				<br><br><br>
+				{% block content %}
+				{% endblock %}
+			</section>
+				<br><br>
+			<footer>
+				(c) Movie Universe 2015
+			</footer>
+		</div>
+	</body>
+</html>

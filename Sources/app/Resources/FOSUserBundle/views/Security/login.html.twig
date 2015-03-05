@@ -1,0 +1,59 @@
+{% extends 'PP5MovieUniverseBundle::base.html.twig' %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block title %}
+	Logowanie
+{% endblock %}
+
+{% block content %}
+{% if error %}
+    <div><h4>{{ error.messageKey|trans(error.messageData, 'security') }}</h4></div>
+{% endif %}
+<form action="{{ path("fos_user_security_check") }}" method="post">
+<input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+	<table style="width: 400px; margin-left: auto; margin-right: auto">
+		<tr>
+			<td style="text-align: right">
+				<label for="username">{{ 'security.login.username'|trans }}</label>&nbsp;
+			</td>
+			<td>
+				<input type="text" id="username" name="_username" value="{{ last_username }}" required="required" />
+			</td>
+		</tr>
+		<tr>
+			<td style="text-align: right">
+				<label for="password">{{ 'security.login.password'|trans }}</label>&nbsp;
+			</td>
+			<td>
+				<input type="password" id="password" name="_password" required="required" />
+			</td>
+		</tr>
+		<tr>
+			<td>
+			</td>
+			<td>
+				<small><input type="checkbox" id="remember_me" name="_remember_me" value="on" /><label for="remember_me">{{ 'security.login.remember_me'|trans }}</label></small>
+			</td>
+		</tr>
+		<tr>
+			<td colspan=2 style="text-align: center">
+				<br><button type="submit" id="_submit" name="_submit" class="btn btn-primary">{{ 'security.login.submit'|trans }}</button>
+			</td>
+		</tr>
+		<tr>
+			<td colspan=2 style="text-align: center">
+				<br><h4>Nie masz jeszcze konta?	<a href="{{ path('fos_user_registration_register') }}">Zarejestruj się</a> już teraz!</h4>
+			</td>
+		</tr>
+	</table>
+	
+{% if app.request.get('_route') != app.request.headers.get('referer') %}    
+    <input type="hidden" name="_target_path" value="{{ app.request.headers.get('referer') }}" />    
+{% endif %}	
+	
+</form>
+
+<h4>Nie masz jeszcze konta? <a href="{{ path('fos_user_registration_register') }}">Zarejestruj się</a> już teraz!</h4>
+
+{% endblock content %}
