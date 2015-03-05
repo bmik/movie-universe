@@ -1,0 +1,17 @@
+{% extends 'PP5MovieUniverseBundle::base.html.twig' %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block content %}
+
+	{% block title %}
+		Sukces!
+	{% endblock title %}
+	
+    <p>{{ 'registration.confirmed'|trans({'%username%': user.username}) }}</p>
+    {% if app.session is not empty %}
+        {% set targetUrl = app.session.get('_security.' ~ app.security.token.providerKey ~ '.target_path') %}
+        {% if targetUrl is not empty %}<p><a href="{{ targetUrl }}">{{ 'registration.back'|trans }}</a></p>{% endif %}
+		<p><a href="{{ path('home') }}"><button class="btn btn-default">Strona główna</button></a>
+    {% endif %}
+{% endblock content %}
