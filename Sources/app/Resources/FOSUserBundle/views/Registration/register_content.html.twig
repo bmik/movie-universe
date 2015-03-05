@@ -1,9 +1,75 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
+
 <form action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="POST" class="fos_user_registration_register">
-    {{ form_widget(form) }}
-    <div>
-        <input type="submit" value="{{ 'registration.submit'|trans }}" />
-    </div>
-	<div><h4>Posiadasz konto Movie Universe? <a href="{{ path('fos_user_security_login') }}">Zaloguj się</a> już teraz!</h4></div>
+	<table style="width: 400px; margin-left: auto; margin-right: auto">
+		<tr>
+			<td style="text-align: right">
+				{{ form_errors(form) }}
+				{{ form_label(form.username) }}
+				{{ form_errors(form.username) }}
+			</td>
+			<td>
+				{{ form_widget(form.username) }}
+			</td>
+		</tr>
+		<tr>
+			<td style="text-align: right">
+				{{ form_label(form.email) }}
+				{{ form_errors(form.email) }}
+			</td>
+			<td>
+				{{ form_widget(form.email) }}
+			</td>
+		</tr>
+		<tr>
+			<td style="text-align: right">
+				{{ form_errors(form.plainPassword.first) }}
+				{{ form_label(form.plainPassword.first) }}
+			</td>
+			<td>
+				{{ form_widget(form.plainPassword.first) }}
+			</td>
+		</tr>
+		<tr>
+			<td style="text-align: right">
+				{{ form_errors(form.plainPassword.second) }}
+				{{ form_label(form.plainPassword.second) }}
+			</td>
+			<td>
+				{{ form_widget(form.plainPassword.second) }}
+			</td>
+		</tr>
+		<tr>
+			<td style="text-align: right">
+				{{ form_errors(form.name) }}
+				{{ form_label(form.name) }}
+			</td>
+			<td>
+				{{ form_widget(form.name) }}
+			</td>
+		</tr>
+		<tr>
+			<td style="text-align: right">
+				{{ form_errors(form.surname) }}
+				{{ form_label(form.surname) }}
+			</td>
+			<td>
+				{{ form_widget(form.surname) }}
+			</td>
+		</tr>
+		<tr>
+			<td>
+			</td>
+			<td>
+				<div>
+					<button type="submit" class="btn btn-primary">{{ 'registration.submit'|trans }}</button>
+				</div>
+			</td>
+		</tr>
+	{{ form_rest(form) }}
 </form>
+
+    
+	
+<div><h4>Posiadasz konto Movie Universe? <a href="{{ path('fos_user_security_login') }}">Zaloguj się</a> już teraz!</h4></div>
